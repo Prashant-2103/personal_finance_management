@@ -134,6 +134,7 @@ function login(event) {
 
     // Simple login validation (static credentials for demo purposes)
     if (username === 'user' && password === 'password') {
+        console.log("login good");
         alert('Login successful!');
         window.location.href = 'dashboard.html'; // Redirect to the dashboard
     } else {
