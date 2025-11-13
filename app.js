@@ -127,27 +127,55 @@ function setBudget(event) {
 }
 
 // Function to handle login (simple client-side validation)
-function login(event) {
-    event.preventDefault();
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+// function login(event) {
+//     event.preventDefault();
+//     const username = document.getElementById('username').value;
+//     const password = document.getElementById('password').value;
+    
+//     // Simple login validation (static credentials for demo purposes)
+//     if (username === 'user' && password === 'password') {
+//         console.log("login good");
+//         alert('Login successful!');
+//         window.location.href = 'dashboard.html'; // Redirect to the dashboard
+//     } else {
+//         alert('Invalid username or password.');
+//     }
+// }
 
-    // Simple login validation (static credentials for demo purposes)
-    if (username === 'user' && password === 'password') {
-        console.log("login good");
-        alert('Login successful!');
-        window.location.href = 'dashboard.html'; // Redirect to the dashboard
-    } else {
-        alert('Invalid username or password.');
-    }
-}
+//redirecting from login page to sign up page 
+document.addEventListener('DOMContentLoaded', () => {
+  const signUpBtn = document.getElementById("signUp");
+  if (!signUpBtn) return; // safely skip if not found
+  signUpBtn.addEventListener('click', () => {
+    window.location.href = 'SignUp.html';
+  });
+});
+
+//redirecting from sign up page to login page
+document.addEventListener('DOMContentLoaded',()=>{
+    const registerbtn = document.getElementById("signUpBtnFromRegistration");
+    const loginBtn = document.getElementById("loginBtnFromRegistration");
+    //  console.log("Button found?", registerbtn);
+
+  if (!registerbtn) return;
+    // registerbtn.addEventListener('click', (e)=>{
+    //     e.preventDefault();
+    //     console.log("registration button is clicked redirecting to login page")
+    //     window.location.href = 'login.html';
+    // })
+
+    //if already have an account redirect to login page
+    loginBtn.addEventListener("click",()=>{
+        window.location.href = 'login.html';
+    })
+})
 
 // Event listeners for forms
 document.addEventListener('DOMContentLoaded', function () {
     // Attach login handler if on the login page
-    if (document.querySelector('.login-form')) {
-        document.querySelector('.login-form').addEventListener('submit', login);
-    }
+    // if (document.querySelector('.login-form')) {
+    //     document.querySelector('.login-form').addEventListener('submit', login);
+    // }
 
     // Attach add expense handler if on the add expense page
     if (document.querySelector('.expense-form')) {
@@ -158,7 +186,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (document.querySelector('#budget-form')) {
         document.querySelector('#budget-form').addEventListener('submit', setBudget);
     }
-
     // Render expenses if on the dashboard page
     if (document.querySelector('.recent-expenses')) {
         renderExpenses();

@@ -177,4 +177,8 @@ main {
     height: 400px;
 }
 
-
+#signUp{
+    background-color: #d6e7f9;
+    font-weight: 600;
+    color: #0056b3;
+}

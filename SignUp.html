@@ -11,19 +11,21 @@
         <h2>Let's create your account</h2>
         <form action="">
             <label for="fname">First Name</label>
-            <input type="text" id="fname" placeholder="John">
+            <input type="text" id="fname" placeholder="John" required>
             <label for="lname">Last Name</label>
-            <input type="text" id="lname" placeholder="Doe">
+            <input type="text" id="lname" placeholder="Doe" required>
             <label for="gmail" >Enter email/username</label>
-            <input type="email" name="" id="gmail">
+            <input type="email" name="" id="gmail" required>
             <label for="pass">Password</label>
-            <input type="password" name="" id="pass">
+            <input type="password" name="" id="pass" required>
             <label for="retype-pass"></label>
-            <input type="password" id="retype-pass"  placeholder="Retype password ">
+            <input type="password" id="retype-pass"  placeholder="Retype password" required>
 
             <button  id="signUpBtnFromRegistration">Sign up</button>
         </form>
+        <p>Already have an account? <button id="loginBtnFromRegistration">Log in</button></p>
     </div>
     <script src="app.js"></script>
+    <script type="module" src="firebase.js"></script>
 </body>
 </html>
