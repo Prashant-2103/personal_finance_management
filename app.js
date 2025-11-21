@@ -124,6 +124,7 @@ function setBudget(event) {
     // Redirect to dashboard and update the budget display
     alert('Budget set successfully! Total expenses have been reset.');
     window.location.href = 'dashboard.html';
+    console.log("Budget resets successfully");
 }
 
 // Function to handle login (simple client-side validation)
