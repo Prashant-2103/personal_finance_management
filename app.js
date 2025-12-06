@@ -63,9 +63,30 @@ function isValidDate(date) {
   // Set the time component to midnight for both dates
   selectedDate.setHours(0, 0, 0, 0);
   today.setHours(0, 0, 0, 0);
-
   return selectedDate <= today;
 }
+
+function smartCategorize(title) {
+  title = title.toLowerCase();
+
+  const rules = {
+    Food: ["pizza", "dominos", "burger", "swiggy", "zomato", "food", "restaurant", "paan dukaan"],
+    Travel: ["uber", "ola", "bus", "train", "flight", "petrol", "diesel"],
+    Shopping: ["amazon", "flipkart", "myntra", "zara", "clothes", "shopping"],
+    Bills: ["electricity", "water", "rent", "bill", "recharge", "phone", "internet"],
+    Groceries: ["milk", "rice", "vegetables", "grocery", "kirana", "market"],
+    Entertainment : ["games", "netflix", "prime video", "hotstar", "drinks", "smokes", "hookah" ]
+  };
+
+  for (let cat in rules) {
+    if (rules[cat].some(word => title.includes(word))) {
+      return cat;
+    }
+  }
+
+  return "Others"; // fallback
+}
+
 
 // Function to handle the addition of a new expense
 function addExpense(event) {
@@ -73,8 +94,14 @@ function addExpense(event) {
 
   const title = document.getElementById("title").value;
   const amount = parseFloat(document.getElementById("amount").value);
-  const category = document.getElementById("category").value;
   const date = document.getElementById("date").value;
+  let category = document.getElementById("category").value;
+
+        // AI auto category
+        if (category === "auto") {
+        category = smartCategorize(title);
+        }
+
 
   if (!title || !isValidTitle(title)) {
     alert("Expense title must contain at least one letter.");
@@ -87,10 +114,16 @@ function addExpense(event) {
     return;
   }
 
-  if (!date || !isValidDate(date)) {
-    alert("Please enter a valid date that is not in the future.");
-    return;
-  }
+  //date error codes 
+ const dateError = document.getElementById("date-error");
+
+if (!isValidDate(date)) {
+  dateError.textContent = "Date cannot be in the future.";
+  return;
+} else {
+  dateError.textContent = "";
+}
+
 
   // Get current expenses from local storage or initialize an empty array
   let expenses = JSON.parse(localStorage.getItem("expenses")) || [];

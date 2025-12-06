@@ -29,16 +29,17 @@
 
                 <label for="category">Category:</label>
                 <select id="category" name="category" required>
+                    <option value="auto">Auto (AI)</option>
                     <option value="food">Food</option>
                     <option value="transport">Transport</option>
                     <option value="entertainment">Entertainment</option>
-                    <option value="utilities">Utilities</option>
-                    <option value="rent">Rent</option>
-                    <option value="misc">Miscellaneous</option>
+
                 </select>
 
                 <label for="date">Date:</label>
-                <input type="date" id="date" name="date" required>
+                <input type="date" id="date">
+                <p id="date-error" class="error"></p>
+
 
                 <button type="submit">Add Expense</button>
             </form>

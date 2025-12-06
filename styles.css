@@ -244,3 +244,9 @@ main {
     color: #95a5a6; /* Subtle color for the date */
 }
 
+/* date error */
+.error {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
