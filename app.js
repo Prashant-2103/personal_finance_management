@@ -13,6 +13,27 @@ function clearExpenses() {
   localStorage.removeItem("expenses");
 }
 
+
+//Ai function for generating insight summary
+function generateAISummary(expenses) {
+  if (expenses.length === 0) return "No expenses recorded yet.";
+
+  let total = expenses.reduce((s, e) => s + e.amount, 0);
+
+  let categories = {};
+  expenses.forEach(e => {
+    categories[e.category] = (categories[e.category] || 0) + e.amount;
+  });
+
+  let topCategory = Object.entries(categories)
+    .sort((a, b) => b[1] - a[1])[0][0];
+
+  let avgPerDay = Math.round(total / 30);
+  let insightArray = [topCategory,avgPerDay];
+  return insightArray;
+}
+
+
 // Function to render expenses on the dashboard
 function renderExpenses() {
   const expenseList = document.querySelector(".recent-expenses ul");
@@ -38,7 +59,7 @@ function renderExpenses() {
   totalExpenseEl.textContent = `₹${totalExpenses}`;
   budgetRemainingEl.textContent = `₹${budget - totalExpenses}`;
 
-  // Render each expense
+  // Render each expense 
   expenses.forEach((expense) => {
     const listItem = document.createElement("li");
     listItem.innerHTML = 
@@ -49,6 +70,22 @@ function renderExpenses() {
     </div>`;
     expenseList.appendChild(listItem);
   });
+
+  //insight ai summary box 
+  const summaryBox = document.getElementById("ai-summary");
+if (summaryBox) {
+   let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+  let summary = generateAISummary(expenses);
+  let topCategory =summary[0];
+  let avgPerDay =summary[1];
+  console.log(topCategory, avgPerDay);
+  summaryBox.innerHTML = `
+    <div class="topCategory">Your highest expense category: <span class="topCategoryName">${topCategory}</span>.</div>
+    <div class="avgPerDay">Average daily spending: ₹${avgPerDay}.</div>
+    <div class="summaryNote">You should keep an eye on ${topCategory} — it takes the largest share of your budget.</div>
+  `;
+}
+
 }
 
 function isValidTitle(title) {
@@ -74,7 +111,7 @@ function smartCategorize(title) {
     Travel: ["uber", "ola", "bus", "train", "flight", "petrol", "diesel"],
     Shopping: ["amazon", "flipkart", "myntra", "zara", "clothes", "shopping"],
     Bills: ["electricity", "water", "rent", "bill", "recharge", "phone", "internet"],
-    Groceries: ["milk", "rice", "vegetables", "grocery", "kirana", "market"],
+    Groceries: ["milk", "rice", "vegetables", "grocery", "kirana", "market", "shop"],
     Entertainment : ["games", "netflix", "prime video", "hotstar", "drinks", "smokes", "hookah" ]
   };
 
