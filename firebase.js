@@ -1,10 +1,11 @@
 // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
-//   import { getAuth } from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js';
-  import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js';
-import {  signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js';
-  // TODO: Add SDKs for Firebase products that you want to use
+import { 
+  getAuth, 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, 
+  sendPasswordResetEmail  // <--- Add this here
+} from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js';  // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
 
   // Your web app's Firebase configuration
@@ -21,7 +22,7 @@ import {  signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
+  // const analytics = getAnalytics(app);
   const auth = getAuth(app);
   console.log(auth);
 
@@ -71,7 +72,7 @@ if(loginBtnLogin){
 
     const email = emailInpLogin.value.trim();
     const password = passwordInpLogin.value;
-    console.log(email,password)
+    // console.log(email,password)
 
     signInWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
@@ -92,3 +93,33 @@ if(loginBtnLogin){
 
 }
 
+
+//Forgot Password sending password reset email if forgotten
+// const email = emailInpLogin.value.trim();
+const forgot_password_btn = document.getElementById("forgot_password");
+
+forgot_password_btn.addEventListener("click", ()=>{
+  const email = emailInpLogin.value.trim();
+  console.log(email);
+      console.log(`forgot button is clicked`,forgot_password_btn);
+      sendPassResetLink(email);
+  })
+  function sendPassResetLink(email){
+    if(!email){
+      console.log("Enter an email address");
+      return;
+    }
+    sendPasswordResetEmail(auth, email)
+  .then(() => {
+    console.log("Password reset email sent!"); 
+    
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+  });
+
+  }
+  
+ 
